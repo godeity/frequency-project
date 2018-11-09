@@ -1,13 +1,20 @@
 from get_data import *
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error
-import math
 import tensorflow as tf
 import numpy as np
 from keras import regularizers
+import math
+
+def NMSE(pred, actual):
+    NMSE = 10*math.log10(np.sum(np.power((pred.reshape(-1, 1) - actual.reshape(-1, 1)), 2))/np.sum(
+        np.power(pred.reshape(-1, 1), 2)))
+    return NMSE
+
+
 
 path = 'Data'
-steps = 3
+steps = 5
 data, batch_size, n_batch = get_data(path)
 print('length of data', len(data))
 
@@ -76,5 +83,6 @@ plt.show()
 # # make a prediction
 y_hat = model.predict(test_X)
 # # calculate MSE
-mse = mean_squared_error(test_y, y_hat)
-print('Test MSE: %.3f' % mse)
+# mse = mean_squared_error(test_y, y_hat)
+nmse = NMSE(y_hat, test_y)
+print('Test NMSE: %.3f' % nmse)
