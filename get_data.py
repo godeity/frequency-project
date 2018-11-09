@@ -12,7 +12,7 @@ def get_data(path):
     # n_train = 10000
     # batch_size = 12288
     batch_size = 1024*3
-    n_batch = 30 * batch_size
+    n_batch = 30 * batch_size     #this should be like n times timesteps * batch_size
 
     rand_start = randint(1, 70000)
 

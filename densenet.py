@@ -8,7 +8,7 @@ from keras import regularizers
 
 def NMSE(pred, actual):
     NMSE = 10*math.log10(np.sum(np.power((pred.reshape(-1, 1) - actual.reshape(-1, 1)), 2))/np.sum(
-        np.power(pred.reshape(-1, 1), 2)))
+        np.power(actual.reshape(-1, 1), 2)))
     return NMSE
 
 
@@ -88,19 +88,14 @@ plt.show()
 
 # # make a prediction
 y_hat = model.predict(test_X)
-# # test_X = test_X.reshape((test_X.shape[0], test_X.shape[2]))
-# # invert scaling for forecast
-# # inv_yhat = concatenate((yhat, test_X[:, 1:]), axis=1)
-# inv_yhat = scaler.inverse_transform(yhat)
-# # inv_yhat = inv_yhat[:,0]
-# # invert scaling for actual
-# inv_y = scaler.inverse_transform(test_y)
-# # calculate RMSE
+# # calculate MSE
 mse = mean_squared_error(test_y, y_hat)
 nmse = NMSE(y_hat, test_y)
-print('Test NMSE: %.3f' % nmse)
-print('mse:', mse)
+print('Test mse:', mse)
+print('Test NMSE:', nmse)
 
-train_y_hat = model.predict(validate_X)
-mse = mean_squared_error(validate_y, train_y_hat)
-nmse = NMSE(validate_y, train_y_hat)
+train_y_hat = model.predict(train_X)
+train_mse = mean_squared_error(train_y_hat, train_y)
+train_nmse = NMSE(train_y_hat, train_y)     #keep in mind prediction go first
+print('train_mse:', train_mse)
+print('train_nmse:', train_nmse)
