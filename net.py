@@ -83,6 +83,13 @@ plt.show()
 # # make a prediction
 y_hat = model.predict(test_X)
 # # calculate MSE
-# mse = mean_squared_error(test_y, y_hat)
+mse = mean_squared_error(test_y, y_hat)
 nmse = NMSE(y_hat, test_y)
 print('Test NMSE: %.3f' % nmse)
+print('mse:', mse)
+
+train_y_hat = model.predict(validate_X)
+mse1 = mean_squared_error(validate_y, train_y_hat)
+nmse1 = NMSE(validate_y, train_y_hat)
+print('mse1:', mse1)
+print('nmse1:', nmse1)
